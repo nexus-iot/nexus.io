@@ -25,6 +25,7 @@ function Server () {
         });
     };
 
+    /*
     app.get('/devices/:apiKey', function (req, res, next) {
         //var ip = req.headers['x-forwarded-for'] || 
         var ip = req.connection.remoteAddress;
@@ -42,8 +43,7 @@ function Server () {
             }
         }
         res.send(devices);
-
-    });
+    });*/
 
     this.displayDevices = function (networkId) {
         //console.log(io.sockets.adapter.rooms);
@@ -72,11 +72,12 @@ function Server () {
             delete Server.devices[socket.id];
             isRegistered = false;
             Server.emit('device-unregistered');
-            Server.displayDevices(networkId);
+            //Server.displayDevices(networkId);
         });
 
         socket.on('discover', function () {
             if (isRegistered) {
+                console.log('discover');
                 var room = io.sockets.adapter.rooms[networkId]; 
                 var devices = [];
                 if (room !== undefined) {
@@ -89,8 +90,9 @@ function Server () {
         });
 
         socket.on('register', function (device) {
-            var ip = socket.request.connection.remoteAddress;
-            console.log(ip);
+            //var ip = socket.request.connection.remoteAddress;
+            var ip = socket.handshake.address.address;
+            //console.log(ip);
             networkId = device.apiKey + ip; 
             socket.join(networkId);
             Server.devices[socket.id] = {
@@ -103,7 +105,7 @@ function Server () {
             socket.emit('registered', Server.devices[socket.id]);
             isRegistered = true;
             Server.emit('device-registered', Server.devices[socket.id]);
-            Server.displayDevices(networkId);
+            //Server.displayDevices(networkId);
         });
     });
 }

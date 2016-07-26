@@ -78,7 +78,6 @@ function Device () {
         this.socket.on('devices', function (devices) {
             Device.emit('devices', devices);
         });
-
     };
 
     this.unregister = function () {
@@ -86,23 +85,8 @@ function Device () {
     };
 
     this.detect = function (callback) {
-
-        Device.emit('discover');
-        /*
-        request(Device.host+'/devices/'+Device.apiKey, function (err, response, body) {
-            if (err) {
-                callback && callback(err);
-            } else if (response.statusCode != 200) {
-                callback && callback(response.statusCode);
-            } else {
-                callback && callback(null, JSON.parse(body));
-            }
-        });
-        */
+        Device.socket.emit('discover');
    };
-
-   
-
 }
 
 util.inherits(Device, EventEmitter);
