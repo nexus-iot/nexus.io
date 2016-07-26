@@ -76,11 +76,13 @@ function Server () {
         });
 
         socket.on('register', function (device) {
-            networkId = device.apiKey + socket.handshake.address;
+            var ip = socket.request.connection.remoteAddress;
+            console.log(ip);
+            networkId = device.apiKey + ip; 
             socket.join(networkId);
             Server.devices[socket.id] = {
                 networkId: networkId,
-                publicIp: socket.handshake.address,
+                publicIp: ip, 
                 privateIp: device.ip,
                 apiKey: device.apiKey,
                 name: device.name
