@@ -75,6 +75,19 @@ function Server () {
             Server.displayDevices(networkId);
         });
 
+        socket.on('discover', function () {
+            if (isRegistered) {
+                var room = io.sockets.adapter.rooms[networkId]; 
+                var devices = [];
+                if (room !== undefined) {
+                    for (var id in room.sockets) {
+                        devices.push(Server.devices[id]);
+                    }
+                }
+                socket.emit('devices', devices);
+            }
+        });
+
         socket.on('register', function (device) {
             var ip = socket.request.connection.remoteAddress;
             console.log(ip);

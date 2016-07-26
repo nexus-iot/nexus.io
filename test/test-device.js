@@ -2,7 +2,7 @@ var device = require('../index').device;
 
 var opts = {
     //host: 'http://localhost:8080',
-    host: 'https://nexus-io.herokuapp.com/',
+    host: 'https://nexus-io.herokuapp.com',
     apiKey: 'azXf21'
 };
 
@@ -12,16 +12,13 @@ device.register(opts);
 device.on('registered', function (deviceInfo) {
     console.log('registered with apiKey: '+deviceInfo);
 
-    /*device.detect(function (err, devices) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(devices);
-        }
-
-    });*/
+    device.detect();
 });
 
 device.on('unregistered', function () {
     console.log('unregistered');
+});
+
+device.on('devices', function (devices) {
+    console.log(devices);
 });
