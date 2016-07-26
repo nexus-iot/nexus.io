@@ -20,7 +20,7 @@ function Server () {
             this.port = opts.port;
         }
 
-        server.listen(this.port, function () {
+        server.listen(this.port, process.env.YOUR_HOST || '0.0.0.0', function () {
            Server.emit('started'); 
         });
     };
