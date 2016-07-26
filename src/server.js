@@ -87,7 +87,7 @@ function Server () {
                 apiKey: device.apiKey,
                 name: device.name
             };
-            socket.emit('registered');
+            socket.emit('registered', Server.devices[socket.id]);
             isRegistered = true;
             Server.emit('device-registered', Server.devices[socket.id]);
             Server.displayDevices(networkId);

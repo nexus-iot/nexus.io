@@ -68,8 +68,8 @@ function Device () {
                 name: Device.name
             });
         });
-        this.socket.on('registered', function () {
-            Device.emit('registered');
+        this.socket.on('registered', function (device) {
+            Device.emit('registered', device);
         });
         this.socket.on('disconnect', function () {
             Device.emit('unregistered');

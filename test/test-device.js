@@ -9,8 +9,8 @@ var opts = {
 device.register(opts);
 
 
-device.on('registered', function () {
-    console.log('registered with apiKey: '+device.apiKey);
+device.on('registered', function (deviceInfo) {
+    console.log('registered with apiKey: '+deviceInfo);
 
     /*device.detect(function (err, devices) {
         if (err) {
