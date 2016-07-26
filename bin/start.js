@@ -1,7 +1,7 @@
 var server = require('../index').server;
 
 var opts = {
-    port: 80
+    port: 8080
 };
 
 server.start(opts);
