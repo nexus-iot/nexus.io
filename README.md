@@ -26,7 +26,7 @@ A server instance references devices.
         // end
     });
 
-    server.on('device-registered', function () {
+    server.on('device-registered', function (device) {
         console.log('device-registered');
     });
     
@@ -46,7 +46,8 @@ A device instance which wants to be referenced by a server
     // or
     device.register({
         host: 'http://localhost:8080',
-        apiKey: 'azXf21'
+        apiKey: 'azXf21',
+        name: 'name', // try to use a unique name on the local network
     });
 
     device.on('registered', function () {

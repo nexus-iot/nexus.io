@@ -40,6 +40,7 @@ function Device () {
     this.host = 'http://nexus.io';
     this.iface = undefined;
     this.apiKey = randomstring.generate(7);
+    this.name = randomstring.generate(4);
 
     this.register = function (opts) {
         if (opts && opts.host) {
@@ -53,13 +54,18 @@ function Device () {
         if (opts && opts.iface) {
             this.iface = opts.iface;
         }
+        
+        if (opts && opts.name) {
+            this.name = opts.name;
+        }
 
         this.socket = client(Device.host);
 
         this.socket.on('connect', function () {
             Device.socket.emit('register', {
                 ip: getIpAddress(Device.iface),
-                apiKey: Device.apiKey
+                apiKey: Device.apiKey,
+                name: Device.name
             });
         });
         this.socket.on('registered', function () {

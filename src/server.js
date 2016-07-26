@@ -75,13 +75,19 @@ function Server () {
             Server.displayDevices(networkId);
         });
 
-        socket.on('register', function (data) {
-            networkId = data.apiKey + socket.handshake.address;
+        socket.on('register', function (device) {
+            networkId = device.apiKey + socket.handshake.address;
             socket.join(networkId);
-            Server.devices[socket.id] = data;
+            Server.devices[socket.id] = {
+                networkId: networkId,
+                publicIp: socket.handshake.address,
+                privateIp: device.ip,
+                apiKey: device.apiKey,
+                name: device.name
+            };
             socket.emit('registered');
             isRegistered = true;
-            Server.emit('device-registered');
+            Server.emit('device-registered', Server.devices[socket.id]);
             Server.displayDevices(networkId);
         });
     });
