@@ -26,6 +26,14 @@ A server instance references devices.
         // end
     });
 
+    server.on('device-registered', function () {
+        console.log('device-registered');
+    });
+    
+    server.on('device-unregistered', function () {
+        console.log('device-unregistered');
+    });
+
 ## Device
 
 ### Registration
