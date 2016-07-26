@@ -86,7 +86,7 @@ function Device () {
             if (err) {
                 callback && callback(err);
             } else if (response.statusCode != 200) {
-                callback && callback(response);
+                callback && callback(response.statusCode);
             } else {
                 callback && callback(null, JSON.parse(body));
             }

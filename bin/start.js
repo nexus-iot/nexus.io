@@ -10,8 +10,9 @@ server.on('started', function () {
     console.log('listening');
 });
 
-server.on('device-registered', function () {
+server.on('device-registered', function (device) {
     console.log('device-registered');
+    console.log(device);
 });
 
 server.on('device-unregistered', function () {
