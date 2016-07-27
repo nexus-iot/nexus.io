@@ -1,10 +1,19 @@
 # nexus.io
-discovery system of devices on local networks
+
+**nexus.io** is a very simple system based on websockets to register and detect devices on local networks. With **nexus.io**, all your devices register themself to a server, then any device can request to the server to find the devices available on the same local network.
+
+In order to choose which devices are in the same network, the server uses the public ip address and to have a real time vision of available devices, we use websockets.
+
+## Installing
+
+    npm install nexus.io --save
+
 
 ## Server
 
-A server instance references devices.
+The server references devices. You may use the default server http://socket.io or start your own server.
 
+You can use a standalone server by executing `npm start`. You also may integrate the server in your app with the module `socket.io`.
 
     var server = require('nexus.io').server;
 
@@ -29,16 +38,17 @@ A server instance references devices.
     server.on('device-registered', function (device) {
         console.log('device-registered');
     });
-    
+
     server.on('device-unregistered', function () {
         console.log('device-unregistered');
     });
+
 
 ## Device
 
 ### Registration
 
-A device instance which wants to be referenced by a server
+Instantiate a `nexus.io device` in order to reference your app online and make it available to other device on the same network.
 
     var device = require('nexus.io').device;
 
@@ -60,8 +70,8 @@ A device instance which wants to be referenced by a server
 
 ### Detection
 
-A device also may detected others devices on the same local network whatever the device is already registered or not.
-    
+A device also may detect other devices on the same local network.
+
     var device = require('nexus.io').device;
 
     // you need to be registered to detect other devices on the local network
