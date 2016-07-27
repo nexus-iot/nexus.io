@@ -64,10 +64,13 @@ A device also may detected others devices on the same local network whatever the
     
     var device = require('nexus.io').device;
 
-    device.detect(function (err, devices) {
-        if (err) {
-            // error
-        } else {
-            console.log(devices);
-        }
+    // you need to be registered to detect other devices on the local network
+    device.register();
+
+    device.on('registered', function () {
+        device.detect();
+    });
+
+    device.on('devices', function (devices) {
+
     });
