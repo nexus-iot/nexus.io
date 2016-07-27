@@ -1,6 +1,6 @@
 # nexus.io
 
-**nexus.io** is a very simple system based on websockets to register and detect computers and embedded boards on local networks. With **nexus.io**, all your devices register themself to a server, then any device can request to the server to find the devices available on the same local network.
+**nexus.io** is a very easy-to-use system based on websockets to register and detect computers and embedded boards on local networks. With **nexus.io**, all your devices register themself to a server, then any device can request to the server to find the devices available on the same local network.
 
 In order to choose which devices are in the same network, the server uses the public ip address and to have a real time vision of available devices, we use websockets.
 
