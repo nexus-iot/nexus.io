@@ -1,4 +1,4 @@
-var server = require('../index').server;
+var server = require('../src/nexus').server;
 
 var opts = {
     port: 8080

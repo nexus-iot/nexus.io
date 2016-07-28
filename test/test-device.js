@@ -1,4 +1,4 @@
-var device = require('../index').device;
+var device = require('../src/nexus').device;
 
 var opts = {
     //host: 'http://localhost:8080',
