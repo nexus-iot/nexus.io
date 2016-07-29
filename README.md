@@ -30,7 +30,8 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
         // unregistered
     });
 
-    // after a device.detect(), a event "devices" is triggered and send all devices currently connected to the local network
+    // after a device.detect(), a event "devices" is triggered and
+    // send all devices currently connected to the local network
     device.on('devices', function (devices) {
         //
     });
