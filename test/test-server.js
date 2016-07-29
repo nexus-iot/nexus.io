@@ -1,10 +1,5 @@
-var server = require('../src/nexus').server;
-
-var opts = {
-    port: 8080
-};
-
-server.start(opts);
+var io = require('socket.io')();
+var server = require('../src/nexus').server(io);
 
 server.on('started', function () {
     console.log('listening');
@@ -17,3 +12,5 @@ server.on('device-registered', function () {
 server.on('device-unregistered', function () {
     console.log('device-unregistered');
 });
+
+var http = io.listen(8080);

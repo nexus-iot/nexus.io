@@ -8,55 +8,18 @@ In order to choose which devices are in the same network, the server uses the pu
 
     npm install nexus.io --save
 
-## Server
-
-The server references devices. You may use the default server http://socket.io or start your own server.
-
-You can use a standalone server by executing `npm start`. You also may integrate the server in your app with the module `socket.io`.
-
-    var server = require('nexus.io').server;
-
-    server.start();
-    // or
-    server.start({
-        port: 8080, // optionnal
-    });
-
-    server.on('started', function () {
-        // started
-    });
-
-    server.on('error', function (error) {
-        // error
-    });
-
-    server.on('end', function () {
-        // end
-    });
-
-    server.on('device-registered', function (device) {
-        console.log('device-registered');
-    });
-
-    server.on('device-unregistered', function () {
-        console.log('device-unregistered');
-    });
-
-
 ## Device
 
-### Registration
+### Registration and detection
 
-Instantiate a `nexus.io device` in order to reference your app online and make it available to other device on the same network.
+Instantiate a `nexus.io device` in order to reference your app online and make it discoverable by other devices on the same network.
 
     var device = require('nexus.io').device;
 
-    device.register();
-    // or
     device.register({
-        host: 'http://localhost:8080',
-        apiKey: 'azXf21',
-        name: 'name', // try to use a unique name on the local network
+        host: 'http://localhost:8080', // default is http://nexus.io
+        apiKey: 'azXf21', // default is random
+        name: 'name', // default is random
     });
 
     device.on('registered', function () {
@@ -67,42 +30,20 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
         // unregistered
     });
 
-### Detection
-
-A device also may detect other devices on the same local network.
-
-
-#### Detection after Registration
-
-    var device = require('nexus.io').device;
-
-    // register the device, then detect others devices
-    device.register({
-        host: 'http://localhost:8080',
-        apiKey: 'azXf21',
-        name: 'name', // try to use a unique name on the local network
-    });
-
-    device.on('registered', function () {
-        device.detect();
-    });
-
-    // after a device.detect(), a event "devices" is triggered with all devices
-    // detected in the local network
+    // after a device.detect(), a event "devices" is triggered and send all devices currently connected to the local network
     device.on('devices', function (devices) {
         //
     });
 
-    // real-time events
     device.on('device-joined', function (newDevice) {
-        //
+        // real-time event when an other device is detected
     });
 
     device.on('device-leaved', function (oldDevice) {
-
+        // real-time event when an other device is detected
     });
 
-#### Detection without registration
+### Detection without registration
 
     var device = require('nexus.io').device;
 
@@ -111,3 +52,29 @@ A device also may detect other devices on the same local network.
     device.on('devices', function (devices) {
         //
     });
+
+
+## Server
+
+The server references devices. You may use the default server http://socket.io or start your own server.
+
+To start your own server, you can use a standalone server by using the repository [nexus-server](https://github.com/ThibaultFriedrich/nexus-server).
+
+You also may integrate the server in your app with the module `nexus.io`.
+
+    var io = require('socket.io')();
+    var server = require('nexus.io').server(io);
+
+    server.on('started', function () {
+        console.log('listening');
+    });
+
+    server.on('device-registered', function () {
+        console.log('device-registered');
+    });
+
+    server.on('device-unregistered', function () {
+        console.log('device-unregistered');
+    });
+
+    var http = io.listen(8080);
