@@ -4,8 +4,23 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var EventEmitter = require('events');
 var util = require('util');
+var swig = require('swig');
 
-app.use(express.static(__dirname+'/../web'));
+
+app
+.engine('html', swig.renderFile)
+.set('view cache', false)
+.set('view engine', 'html')
+.set('views', __dirname+'/../web/views/templates')
+.get('/', function (req, res) {
+    res.render('index.html', {title: 'Nexus'})
+})
+.get('/detect', function (req, res) {
+    res.render('detect.html', {title: 'Detection'})
+})
+.use(express.static(__dirname+'/../web/static'))
+.use('/partials', express.static(__dirname+'/../web/views/partials'));
+
 
 function Server () {
 
@@ -67,6 +82,7 @@ function Server () {
                 return;
             }
             socket.leave(networkId);
+            socket.broadcast.to(networkId).emit('device-leaved', Server.devices[socket.id]);
             Server.devices[socket.id] = null;
             delete Server.devices[socket.id];
             isRegistered = false;
@@ -75,8 +91,10 @@ function Server () {
         });
 
         socket.on('discover', function (opts) {
+            console.log('discover '+isRegistered);
+            //console.log(opts && opts.apiKey == true);
+            console.log(opts);
             if (isRegistered) {
-                console.log('discover');
                 var room = io.sockets.adapter.rooms[networkId];
                 var devices = [];
                 if (room !== undefined) {
@@ -86,9 +104,13 @@ function Server () {
                 }
                 socket.emit('devices', devices);
             } else if (opts && opts.apiKey){
-                var ip = socket.handshake.address.address;
+                var ip = socket.handshake.address;
+                console.log(ip);
+                console.log(opts.apiKey);
+
                 var networkIdTmp = opts.apiKey + ip;
-                var room = io.sockets.adapter.rooms[networkId];
+                var room = io.sockets.adapter.rooms[networkIdTmp];
+                console.log(networkIdTmp);
                 var devices = [];
                 if (room !== undefined) {
                     for (var id in room.sockets) {
@@ -101,20 +123,22 @@ function Server () {
 
         socket.on('register', function (device) {
             //var ip = socket.request.connection.remoteAddress;
-            var ip = socket.handshake.address.address;
+            var ip = socket.handshake.address;
             //console.log(ip);
             networkId = device.apiKey + ip;
-            socket.join(networkId);
-            Server.devices[socket.id] = {
+            var newDevice = {
                 networkId: networkId,
                 publicIp: ip,
                 privateIp: device.ip,
                 apiKey: device.apiKey,
                 name: device.name
             };
-            socket.emit('registered', Server.devices[socket.id]);
+            socket.join(networkId);
+            socket.broadcast.to(networkId).emit('device-joined', newDevice);
+            Server.devices[socket.id] = newDevice;
+            socket.emit('registered', newDevice);
             isRegistered = true;
-            Server.emit('device-registered', Server.devices[socket.id]);
+            Server.emit('device-registered', newDevice);
             //Server.displayDevices(networkId);
         });
     });

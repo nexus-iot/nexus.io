@@ -13,7 +13,7 @@ function getIpAddress (arg) {
         for (var index in ifaces[arg]) {
             var iface = ifaces[ifname][index];
             if ('IPv4' == iface.family && iface.internal == false) {
-               return iface.address; 
+               return iface.address;
             }
         }
     } else {
@@ -21,7 +21,7 @@ function getIpAddress (arg) {
             for (var index in ifaces[ifname]) {
                 var iface = ifaces[ifname][index];
                 if ('IPv4' == iface.family && iface.internal == false) {
-                   return iface.address; 
+                   return iface.address;
                 }
             }
         }
@@ -46,7 +46,7 @@ function Device () {
         if (opts && opts.host) {
             this.host = opts.host;
         }
-        
+
         if (opts && opts.apiKey) {
             this.apiKey = opts.apiKey;
         }
@@ -54,7 +54,7 @@ function Device () {
         if (opts && opts.iface) {
             this.iface = opts.iface;
         }
-        
+
         if (opts && opts.name) {
             this.name = opts.name;
         }
@@ -74,9 +74,14 @@ function Device () {
         this.socket.on('disconnect', function () {
             Device.emit('unregistered');
         });
-
         this.socket.on('devices', function (devices) {
             Device.emit('devices', devices);
+        });
+        this.socket.on('device-joined', function (newDevice) {
+            Device.emit('device-joined', newDevice);
+        });
+        this.socket.on('device-leaved', function (oldDevice) {
+            Device.emit('device-joined', oldDevice);
         });
     };
 
@@ -91,4 +96,3 @@ function Device () {
 
 util.inherits(Device, EventEmitter);
 module.exports = Device;
-

@@ -1,0 +1,181 @@
+
+//@grey: #cccccc;
+@blue: #2185D0;
+
+@grey: rgba(255,255,255,.5);
+@lightGrey: #aaaaaa;
+
+strong {
+    color: @blue!important;
+}
+
+.github {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    &:hover {
+        color: @blue;
+        cursor: pointer;
+    }
+}
+
+.header {
+    padding: 10px;
+    &-home {
+        font-size: 40px;
+        color: black;
+        &:hover {
+            color: @blue;
+        }
+    }
+}
+
+.welcome {
+    padding: 200px 0px;
+
+    background-color: black;
+    background-image: url('../img/earth-2.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: right;
+
+    &-presentation {
+        display: inline-block;
+        text-align: left;
+        width: 50%;
+    }
+
+
+
+    &-title {
+        text-align: left;
+        font-size: 3em;
+        color: white;
+        //text-transform: uppercase;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    &-vp {
+        font-size: 2em;
+        color: @blue;
+        padding-bottom: 25px;
+    }
+}
+
+.exec-summary {
+    text-align: center;
+    font-size: 1.4em;
+    padding: 150px 0px;
+    line-height: 1.3em;
+    max-width: 800px;
+    margin: auto;
+
+
+
+    &-install {
+        padding-bottom: 30px;
+
+
+        code {
+            font-size: 0.9em;
+            //background: black
+            //border-radius:
+
+        }
+
+        p {
+            //font-size: 1.2em;
+            //font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+            //font-family: 'Cutive', serif;
+
+        }
+    }
+}
+
+.feature {
+    margin-bottom: 100px;
+
+    .ui.icon.image {
+        height: 70px!important;
+    }
+
+}
+
+.api-key {
+    &-explanation {
+        font-size: 1.2em;
+    }
+    &-enter {
+        text-align: center;
+        padding-top: 100px;
+        padding-bottom: 20px;
+    }
+    &-button {
+        display: inline-block;
+        margin-left: 10px;
+    }
+}
+
+.public-ip {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.devices {
+    max-width: 500px;
+    margin: auto;
+    .segment + .segment {
+        margin-top: 20px;
+    }
+
+    &-no {
+        text-align: center;
+        color: @lightGrey;
+    }
+}
+
+.getting-started {
+    &-icon {
+        height: 80px!important;
+    }
+}
+
+.footer {
+    padding: 70px 0px;
+    background-color: black;
+    color: white;
+    font-size: 1.1em;
+    text-align: center;
+    margin-top: 50px;
+
+    &-content {
+        max-width: 800px;
+        margin: auto;
+        color: @grey;
+
+        a {
+            color: @grey;
+        }
+
+    }
+
+    &-icons {
+        text-align: right;
+    }
+
+    &-nexus {
+        padding: 10px;
+    }
+
+    &-license {
+        display: inline-block;
+        color: @grey;
+        cursor: pointer;
+        &:hover {
+            color: white;
+        }
+    }
+}

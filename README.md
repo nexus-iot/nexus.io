@@ -8,7 +8,6 @@ In order to choose which devices are in the same network, the server uses the pu
 
     npm install nexus.io --save
 
-
 ## Server
 
 The server references devices. You may use the default server http://socket.io or start your own server.
@@ -72,15 +71,43 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
 
 A device also may detect other devices on the same local network.
 
+
+#### Detection after Registration
+
     var device = require('nexus.io').device;
 
-    // you need to be registered to detect other devices on the local network
-    device.register();
+    // register the device, then detect others devices
+    device.register({
+        host: 'http://localhost:8080',
+        apiKey: 'azXf21',
+        name: 'name', // try to use a unique name on the local network
+    });
 
     device.on('registered', function () {
         device.detect();
     });
 
+    // after a device.detect(), a event "devices" is triggered with all devices
+    // detected in the local network
     device.on('devices', function (devices) {
+        //
+    });
 
+    // real-time events
+    device.on('device-joined', function (newDevice) {
+        //
+    });
+
+    device.on('device-leaved', function (oldDevice) {
+
+    });
+
+#### Detection without registration
+
+    var device = require('nexus.io').device;
+
+    device.detect({ apiKey: 'azXf21' }); // give the apiKey
+
+    device.on('devices', function (devices) {
+        //
     });

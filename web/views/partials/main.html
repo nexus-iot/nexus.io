@@ -1,0 +1,28 @@
+<div class="api-key-enter">
+
+    <h1>Detect the devices</h1>
+    <p class="api-key-explanation">Detect the devices on your private network by giving your api key</p>
+    <div class="ui input inline large">
+        <input type="text" placeholder="Enter your api key..." ng-model="device.apiKey">
+    </div>
+    <div class="api-key-button">
+        <button class="ui primary button large" ng-class="{disabled:device.apiKey==''}" ng-click="discover()">
+            <span ng-show="devices.length == 0">Detect</span>
+            <span ng-show="devices.length > 0">Reload</span>
+
+        </button>
+    </div>
+</div>
+
+<div class="devices-no" ng-show="devices.length == 0 && detectionDone">
+    No devices has been detected.
+</div>
+
+<div class="public-ip" ng-show="devices.length > 0">
+    Your network is identified by the public ip {{device.publicIp}}.
+</div>
+<div class="devices">
+    <div class="ui segment" ng-repeat="device in devices">
+        <strong>{{device.name}}</strong> at ip address {{device.privateIp}}
+    </div>
+</div>

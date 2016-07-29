@@ -12,11 +12,11 @@ gulp.task('start', function () {
 });
 
 gulp.task('watch-less', function() {
-    gulp.watch('./web/style/*.less', ['less']);  // Watch all the .less files, then run the less task
+    gulp.watch('./web/static/style/*.less', ['less']);  // Watch all the .less files, then run the less task
 });
 
 gulp.task('less', function () {
-    return gulp.src('./web/style/style.less')
+    return gulp.src('./web/static/style/style.less')
     .pipe(less())
-    .pipe(gulp.dest('./web/style/'));
+    .pipe(gulp.dest('./web/static/style/'));
 });
