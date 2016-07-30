@@ -17,7 +17,7 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
     var device = require('nexus.io').device;
 
     device.register({
-        host: 'http://localhost:8080', // default is http://nexus.io
+        host: 'http://localhost:8080', // default is http://nexus-io.com
         apiKey: 'azXf21', // default is random
         name: 'name', // default is random
     });
@@ -57,7 +57,7 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
 
 ## Server
 
-The server references devices. You may use the default server http://nexus.io or start your own server.
+The server references devices. You may use the default server http://nexus-io.com or start your own server.
 
 To start your own server, you can use a standalone server by using the repository [nexus-server](https://github.com/nexus-iot/nexus-server).
 
