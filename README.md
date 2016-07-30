@@ -19,7 +19,8 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
     device.register({
         host: 'http://localhost:8080', // default is http://nexus-io.com
         apiKey: 'azXf21', // default is random
-        name: 'name', // default is random
+        name: 'name', // default is random,
+        id: ''
     });
 
     device.on('registered', function () {
