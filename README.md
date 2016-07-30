@@ -59,7 +59,7 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
 
 The server references devices. You may use the default server http://socket.io or start your own server.
 
-To start your own server, you can use a standalone server by using the repository [nexus-server](https://github.com/ThibaultFriedrich/nexus-server).
+To start your own server, you can use a standalone server by using the repository [nexus-server](https://github.com/nexus-iot/nexus-server).
 
 You also may integrate the server in your app with the module `nexus.io`.
 
