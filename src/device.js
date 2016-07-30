@@ -37,10 +37,11 @@ function Device () {
     var Device = this;
 
     this.socket = null;
-    this.host = 'http://nexus.io';
+    this.host = 'http://nexus-io.com';
     this.iface = undefined;
     this.apiKey = randomstring.generate(7);
     this.name = randomstring.generate(4);
+    this.id = randomstring.generate(256);
 
     this.register = function (opts) {
         if (opts && opts.host) {
@@ -59,13 +60,18 @@ function Device () {
             this.name = opts.name;
         }
 
+        if (opts && opts.id) {
+            this.id = opts.id;
+        }
+
         this.socket = client(Device.host);
 
         this.socket.on('connect', function () {
             Device.socket.emit('register', {
                 ip: getIpAddress(Device.iface),
                 apiKey: Device.apiKey,
-                name: Device.name
+                name: Device.name,
+                id: Device.id
             });
         });
         this.socket.on('registered', function (device) {

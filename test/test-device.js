@@ -3,7 +3,8 @@ var device = require('../src/nexus').device;
 var opts = {
     host: 'http://localhost:8080',
     //host: 'https://nexus-io.herokuapp.com',
-    apiKey: 'azXf21'
+    apiKey: 'abf21',
+    id: '12fca'
 };
 
 device.register(opts);

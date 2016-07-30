@@ -12,6 +12,10 @@ function Server (io) {
 
     this.devices = {};
 
+    io.on('connection', function (socket) {
+        Server.use(socket);
+    });
+
     this.devicesInNetwork = function (networkId) {
         var room = io.sockets.adapter.rooms[networkId];
         var devices = [];
@@ -21,11 +25,7 @@ function Server (io) {
             }
         }
         return devices;
-    }
-
-    io.on('connection', function (socket) {
-        Server.use(socket);
-    });
+    };
 
     this.use = function (socket) {
         var isRegistered = false;
@@ -45,28 +45,33 @@ function Server (io) {
         });
 
         socket.on('register', function (device) {
-            console.log('register');
-            var ip = socket.handshake.address;
-            networkId = device.apiKey + ip;
-            var newDevice = {
-                networkId: networkId,
-                publicIp: ip,
-                privateIp: device.ip,
-                apiKey: device.apiKey,
-                name: device.name
-            };
-            socket.join(networkId);
-            socket.broadcast.to(networkId).emit('device-joined', newDevice);
-            Server.devices[socket.id] = newDevice;
-            socket.emit('registered', newDevice);
-            isRegistered = true;
-            Server.emit('device-registered', newDevice);
-            //Server.displayDevices(networkId);
+            if (device
+                && device.name
+                && device.apiKey
+                && device.ip
+                && device.id
+                && device.name != ''
+                && device.id != '') {
+                    var ip = socket.handshake.address;
+                    networkId = generateNetworkId(ip, device.apiKey);
+                    var newDevice = {
+                        networkId: networkId,
+                        publicIp: ip,
+                        privateIp: device.ip,
+                        apiKey: device.apiKey,
+                        id: device.id,
+                        name: device.name
+                    };
+                    socket.join(networkId);
+                    socket.broadcast.to(networkId).emit('device-joined', newDevice);
+                    Server.devices[socket.id] = newDevice;
+                    socket.emit('registered', newDevice);
+                    isRegistered = true;
+                    Server.emit('device-registered', newDevice);
+            }
         });
 
         socket.on('discover', function (opts) {
-            console.log('discover '+isRegistered);
-            //console.log(opts && opts.apiKey == true);
             if (isRegistered) {
                 socket.emit('devices', Server.devicesInNetwork(networkId));
             } else if (opts && opts.apiKey){
