@@ -58,7 +58,7 @@ function Server (io) {
                     var newDevice = {
                         networkId: networkId,
                         publicIp: ip,
-                        ips: [socket.handshake.address, socket.request.connection.remoteAddress, socket.client.request.headers['x-forwarded-for'], socket.handshake.headers['x-real-ip']]
+                        ips: [socket.handshake.address, socket.request.connection.remoteAddress, socket.client.request.headers['x-forwarded-for'], socket.handshake.headers['x-real-ip']],
                         privateIp: device.ip,
                         apiKey: device.apiKey,
                         id: device.id,
