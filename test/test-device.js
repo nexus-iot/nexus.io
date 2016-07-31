@@ -1,8 +1,8 @@
 var device = require('../src/nexus').device;
 
 var opts = {
-    host: 'http://localhost:8080',
-    //host: 'https://nexus-io.herokuapp.com',
+    //host: 'http://localhost:8080',
+    host: 'https://nexus-io.herokuapp.com',
     // host: 'http://nexus-io.com',
     apiKey: 'abf21',
     id: '12fca'
