@@ -68,6 +68,9 @@ function Server (io) {
                     socket.emit('registered', newDevice);
                     isRegistered = true;
                     Server.emit('device-registered', newDevice);
+            } else {
+                // console.log(device);
+                // console.log('ok');
             }
         });
 
