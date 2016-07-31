@@ -45,17 +45,6 @@ Instantiate a `nexus.io device` in order to reference your app online and make i
         // real-time event when an other device is detected
     });
 
-### Detection without registration
-
-    var device = require('nexus.io').device;
-
-    device.detect({ apiKey: 'azXf21' }); // give the apiKey
-
-    device.on('devices', function (devices) {
-        //
-    });
-
-
 ## Server
 
 The server references devices. You may use the default server http://nexus-io.com or start your own server.

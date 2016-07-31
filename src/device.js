@@ -6,7 +6,6 @@ var http = require('http');
 var client = require('socket.io-client');
 var randomstring = require("randomstring");
 
-
 function getIpAddress (arg) {
     if (arg) {
         for (var index in ifaces[arg]) {
@@ -91,11 +90,15 @@ function Device () {
     };
 
     this.unregister = function () {
-        Device.socket.disconnect();
+        if (Device.socket) {
+            Device.socket.disconnect();
+        }
     };
 
     this.detect = function (callback) {
-        Device.socket.emit('discover');
+        if (Device.socket) {
+            Device.socket.emit('discover');
+        }
    };
 }
 
