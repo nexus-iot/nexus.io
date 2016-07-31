@@ -4,7 +4,6 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var http = require('http');
 var client = require('socket.io-client');
-var request = require('request');
 var randomstring = require("randomstring");
 
 
