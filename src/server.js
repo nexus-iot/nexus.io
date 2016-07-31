@@ -1,8 +1,12 @@
 var EventEmitter = require('events');
 var util = require('util');
 
-function generateNetworkId(publicIp, apiKey) {
+function generateNetworkId (publicIp, apiKey) {
     return apiKey + publicIp;
+}
+
+function getIpFromSocket (socket) {
+    return socket.client.request.headers['x-forwarded-for'] || socket.handshake.address;
 }
 
 function Server (io) {
@@ -52,7 +56,7 @@ function Server (io) {
                 && device.id
                 && device.name != ''
                 && device.id != '') {
-                    var ip = socket.handshake.address;
+                    var ip = getIpFromSocket(socket);
 
                     networkId = generateNetworkId(ip, device.apiKey);
                     var newDevice = {
@@ -80,7 +84,7 @@ function Server (io) {
             if (isRegistered) {
                 socket.emit('devices', Server.devicesInNetwork(networkId));
             } else if (opts && opts.apiKey){
-                var ip = socket.handshake.address;
+                var ip = getIpFromSocket(socket);
                 var networkIdTmp = generateNetworkId(ip, opts.apiKey);
                 socket.emit('devices', Server.devicesInNetwork(networkIdTmp));
             }
