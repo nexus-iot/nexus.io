@@ -85,7 +85,7 @@ function Device () {
             Device.emit('device-joined', newDevice);
         });
         this.socket.on('device-leaved', function (oldDevice) {
-            Device.emit('device-joined', oldDevice);
+            Device.emit('device-leaved', oldDevice);
         });
     };
 
