@@ -39,7 +39,7 @@ function Device () {
     this.iface = undefined;
     this.apiKey = randomstring.generate(7);
     this.name = randomstring.generate(4);
-    this.id = randomstring.generate(256);
+    this.id = randomstring.generate(64);
 
     this.register = function (opts) {
         if (opts && opts.host) {

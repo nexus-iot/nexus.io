@@ -1,6 +1,6 @@
 {
     "name": "nexus.io",
-    "version": "0.4.7",
+    "version": "0.5.0",
     "description": "Discovery system of devices on local networks",
     "main": "src/nexus.js",
     "scripts": {
